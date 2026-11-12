@@ -1,0 +1,16 @@
+# dsh-plugin-recovery-snapshot — capa bundle de DSH.
+# Inserta una fila @deepseek-ai/dsh-mcp-client que lanza el servidor como "recovery".
+# Tools resultantes: mcp__recovery__* (ver README).
+- insert:
+    - id: mcp-recovery-snapshot
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: recovery
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js "(process.env.DSH_HOME && process.env.DSH_HOME.trim() !== '' ? process.env.DSH_HOME : (process.env.USERPROFILE || process.env.HOME || '') + '/.dsh') + '/plugins/recovery-snapshot/server.mjs'"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+        failOnStartupError: false
+        toolCallTimeoutMs: 60000
